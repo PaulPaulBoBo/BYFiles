@@ -9,11 +9,13 @@
 #import "NSFileManager+BY.h"
 #import "NSData+BY.h"
 #import "AFNetworking.h"
+#import "NSDate+BY.h"
 
 @interface ViewController ()
 
 @property (nonatomic, strong) BYFileTreeModel *fileModel;
 @property (nonatomic, assign) NSInteger fileIndex;
+@property (unsafe_unretained) IBOutlet NSTextView *msgTextView;
 
 @end
 
@@ -22,10 +24,29 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.fileIndex = 0;
+    [self updateMsg:@"请选择路径"];
+}
+
+-(void)updateMsg:(NSString *)msg {
+    NSString *dateStr = [NSDate stringWithDate:[NSDate date] type:(BY_DateFormatterType_ymdhms)];
+    if(self.msgTextView.string.length == 0) {
+        self.msgTextView.string = [NSString stringWithFormat:@"%@:%@", dateStr, msg];
+    } else {
+        self.msgTextView.string = [NSString stringWithFormat:@"%@\n%@:%@", self.msgTextView.string, dateStr, msg];
+    }
+}
+
+- (IBAction)choosePath:(id)sender {
     [self openPanelCanChooseFiles:NO finish:^(NSString *path) {
+        self.fileIndex = 0;
+        [self updateMsg:[NSString stringWithFormat:@"选择的路径为：%@", path]];
         self.fileModel = [NSFileManager loadFilesInPath:path level:@0 isContinue:YES];
-        
-        [self beginDownloadNextFile];
+        if(self.fileModel.files.count > 0) {
+            [self updateMsg:[NSString stringWithFormat:@"当前路径下共有%ld个文件", self.fileModel.files.count]];
+            [self beginDownloadNextFile];
+        } else {
+            [self updateMsg:@"当前目录无文件"];
+        }
     }];
 }
 
@@ -110,7 +131,10 @@
     __weak typeof(self)wkSelf = self;
     [self downloadURL:fileUrl destinationPath:destinationPath progress:nil completion:^(NSURLResponse *response, NSURL *filePath, NSError *error) {
         if (!error) {
+            [self updateMsg:[NSString stringWithFormat:@"文件\"%@\"下载成功!", fileUrl]];
             [wkSelf downloadVideoWithArr:listArr andIndex:index+1 videoName:videoName];
+        } else {
+            [self updateMsg:[NSString stringWithFormat:@"下载失败:%@", error.localizedDescription]];
         }
     }];
 }
@@ -151,6 +175,7 @@
 
 // 合成为一个ts文件
 - (void)combVideos {
+    [self updateMsg:@"开始合并数据"];
     NSString *fileName = [NSString stringWithFormat:@"video_%.0lf.mp4", [[NSDate date] timeIntervalSince1970] ];
     NSString *filePath = [[NSFileManager documentPath] stringByAppendingPathComponent:fileName];
     if ([[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
@@ -176,26 +201,11 @@
         }
     }
     [NSFileManager writeData:dataArr toFile:filePath finish:^(BOOL isSuc, NSString * _Nullable msg) {
-        NSLog(@"%@  %@", msg, filePath);
+        [self updateMsg:[NSString stringWithFormat:@"%@  %@", msg, filePath]];
+        [self updateMsg:@"3秒后开始下一个文件下载"];
         sleep(3);
         [self beginDownloadNextFile];
     }];
-    
-    //    [[FFmpegManager sharedManager] converWithInputPath:@""
-    //                                            outputPath:@""
-    //                                          processBlock:^(float process) {
-    //        //        self.tipLab.text = [NSString stringWithFormat:@"转码中 %.2f%%", process * 100];
-    //        //        self.progressView.progress = process;
-    //    } completionBlock:^(NSError *error) {
-    //        //        if (error) {
-    //        //            NSLog(@"转码失败 : %@", error);
-    //        //            self.tipLab.text = @"转码失败";
-    //        //        } else {
-    //        //            NSLog(@"转码成功，请在相应路径查看，默认在沙盒Documents路径");
-    //        //            self.tipLab.text = @"恭喜，转码成功！";
-    //        //        }
-    //    }];
-    
 }
 
 -(void)openPanelCanChooseFiles:(BOOL)canChooseFiles finish:(void(^)(NSString *path))finish {

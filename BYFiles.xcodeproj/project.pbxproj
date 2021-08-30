@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5A659B2126DCD46A0038B355 /* NSDate+BY.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A659B2026DCD46A0038B355 /* NSDate+BY.m */; };
 		5AB04FC826DA59E900F7B167 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AB04FC726DA59E900F7B167 /* AppDelegate.m */; };
 		5AB04FCB26DA59E900F7B167 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AB04FCA26DA59E900F7B167 /* ViewController.m */; };
 		5AB04FCD26DA59E900F7B167 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5AB04FCC26DA59E900F7B167 /* Assets.xcassets */; };
@@ -28,6 +29,8 @@
 
 /* Begin PBXFileReference section */
 		3A52B3C5ABE5AEE582F1FD36 /* Pods-BYFiles.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BYFiles.release.xcconfig"; path = "Target Support Files/Pods-BYFiles/Pods-BYFiles.release.xcconfig"; sourceTree = "<group>"; };
+		5A659B1F26DCD46A0038B355 /* NSDate+BY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+BY.h"; sourceTree = "<group>"; };
+		5A659B2026DCD46A0038B355 /* NSDate+BY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+BY.m"; sourceTree = "<group>"; };
 		5AB04FC326DA59E900F7B167 /* BYFiles.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BYFiles.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5AB04FC626DA59E900F7B167 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		5AB04FC726DA59E900F7B167 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -109,6 +112,8 @@
 				5AB0508926DA844600F7B167 /* AFNetworking */,
 				5AB04FE026DA5BEF00F7B167 /* NSData+BY.h */,
 				5AB04FE126DA5BEF00F7B167 /* NSData+BY.m */,
+				5A659B1F26DCD46A0038B355 /* NSDate+BY.h */,
+				5A659B2026DCD46A0038B355 /* NSDate+BY.m */,
 				5AB04FDD26DA5B0800F7B167 /* BYFileTreeModel.h */,
 				5AB04FDE26DA5B0800F7B167 /* BYFileTreeModel.m */,
 				5AB04FDA26DA5AC800F7B167 /* NSFileManager+BY.h */,
@@ -260,6 +265,7 @@
 				5AB04FD326DA59E900F7B167 /* main.m in Sources */,
 				5AB0509C26DA844600F7B167 /* AFSecurityPolicy.m in Sources */,
 				5AB04FC826DA59E900F7B167 /* AppDelegate.m in Sources */,
+				5A659B2126DCD46A0038B355 /* NSDate+BY.m in Sources */,
 				5AB04FDF26DA5B0800F7B167 /* BYFileTreeModel.m in Sources */,
 				5AB0509726DA844600F7B167 /* AFURLResponseSerialization.m in Sources */,
 				5AB0509A26DA844600F7B167 /* AFURLRequestSerialization.m in Sources */,
@@ -402,6 +408,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = BYFiles/BYFiles.entitlements;
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 6S6F4R576X;
@@ -427,6 +434,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = BYFiles/BYFiles.entitlements;
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 6S6F4R576X;
