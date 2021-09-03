@@ -24,6 +24,13 @@
 		5AB0509C26DA844600F7B167 /* AFSecurityPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AB0509526DA844600F7B167 /* AFSecurityPolicy.m */; };
 		5AB0509F26DA8AEB00F7B167 /* RBasePresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AB0509D26DA8AEB00F7B167 /* RBasePresenter.m */; };
 		5AB050A226DA8B9A00F7B167 /* RFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AB050A026DA8B9A00F7B167 /* RFNetworking.m */; };
+		5AD36ADB26E1AA440056E1E7 /* LogMsgTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AD36ADA26E1AA440056E1E7 /* LogMsgTool.m */; };
+		5AD36AE426E207EB0056E1E7 /* LoadFileWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AD36AE226E207EB0056E1E7 /* LoadFileWindowController.m */; };
+		5AD36AE526E207EB0056E1E7 /* LoadFileWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5AD36AE326E207EB0056E1E7 /* LoadFileWindowController.xib */; };
+		5AEA34A926E0FC1C00794261 /* ChoosePathTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AEA34A826E0FC1C00794261 /* ChoosePathTool.m */; };
+		5AEA34AC26E0FC3800794261 /* ConvertFileTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AEA34AB26E0FC3800794261 /* ConvertFileTool.m */; };
+		5AEA34AF26E0FC4800794261 /* DownloadFileTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AEA34AE26E0FC4800794261 /* DownloadFileTool.m */; };
+		5AEA34B226E0FC7F00794261 /* CombineFileTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AEA34B126E0FC7F00794261 /* CombineFileTool.m */; };
 		B6EBD4EC02D4840B6D570A02 /* libPods-BYFiles.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 89B0C357941EF71E24D097C3 /* libPods-BYFiles.a */; };
 /* End PBXBuildFile section */
 
@@ -64,6 +71,19 @@
 		5AB0509E26DA8AEB00F7B167 /* RBasePresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBasePresenter.h; sourceTree = "<group>"; };
 		5AB050A026DA8B9A00F7B167 /* RFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RFNetworking.m; sourceTree = "<group>"; };
 		5AB050A126DA8B9A00F7B167 /* RFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RFNetworking.h; sourceTree = "<group>"; };
+		5AD36AD926E1AA440056E1E7 /* LogMsgTool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LogMsgTool.h; sourceTree = "<group>"; };
+		5AD36ADA26E1AA440056E1E7 /* LogMsgTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LogMsgTool.m; sourceTree = "<group>"; };
+		5AD36AE126E207EB0056E1E7 /* LoadFileWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoadFileWindowController.h; sourceTree = "<group>"; };
+		5AD36AE226E207EB0056E1E7 /* LoadFileWindowController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoadFileWindowController.m; sourceTree = "<group>"; };
+		5AD36AE326E207EB0056E1E7 /* LoadFileWindowController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadFileWindowController.xib; sourceTree = "<group>"; };
+		5AEA34A726E0FC1C00794261 /* ChoosePathTool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChoosePathTool.h; sourceTree = "<group>"; };
+		5AEA34A826E0FC1C00794261 /* ChoosePathTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChoosePathTool.m; sourceTree = "<group>"; };
+		5AEA34AA26E0FC3800794261 /* ConvertFileTool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConvertFileTool.h; sourceTree = "<group>"; };
+		5AEA34AB26E0FC3800794261 /* ConvertFileTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConvertFileTool.m; sourceTree = "<group>"; };
+		5AEA34AD26E0FC4800794261 /* DownloadFileTool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DownloadFileTool.h; sourceTree = "<group>"; };
+		5AEA34AE26E0FC4800794261 /* DownloadFileTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DownloadFileTool.m; sourceTree = "<group>"; };
+		5AEA34B026E0FC7F00794261 /* CombineFileTool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CombineFileTool.h; sourceTree = "<group>"; };
+		5AEA34B126E0FC7F00794261 /* CombineFileTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CombineFileTool.m; sourceTree = "<group>"; };
 		6C88FDD75821B185918E1BB4 /* Pods-BYFiles.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BYFiles.debug.xcconfig"; path = "Target Support Files/Pods-BYFiles/Pods-BYFiles.debug.xcconfig"; sourceTree = "<group>"; };
 		89B0C357941EF71E24D097C3 /* libPods-BYFiles.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BYFiles.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -105,19 +125,11 @@
 				5AB04FC726DA59E900F7B167 /* AppDelegate.m */,
 				5AB04FC926DA59E900F7B167 /* ViewController.h */,
 				5AB04FCA26DA59E900F7B167 /* ViewController.m */,
-				5AB0509E26DA8AEB00F7B167 /* RBasePresenter.h */,
-				5AB0509D26DA8AEB00F7B167 /* RBasePresenter.m */,
-				5AB050A126DA8B9A00F7B167 /* RFNetworking.h */,
-				5AB050A026DA8B9A00F7B167 /* RFNetworking.m */,
-				5AB0508926DA844600F7B167 /* AFNetworking */,
-				5AB04FE026DA5BEF00F7B167 /* NSData+BY.h */,
-				5AB04FE126DA5BEF00F7B167 /* NSData+BY.m */,
-				5A659B1F26DCD46A0038B355 /* NSDate+BY.h */,
-				5A659B2026DCD46A0038B355 /* NSDate+BY.m */,
-				5AB04FDD26DA5B0800F7B167 /* BYFileTreeModel.h */,
-				5AB04FDE26DA5B0800F7B167 /* BYFileTreeModel.m */,
-				5AB04FDA26DA5AC800F7B167 /* NSFileManager+BY.h */,
-				5AB04FDB26DA5AC800F7B167 /* NSFileManager+BY.m */,
+				5AD36AE126E207EB0056E1E7 /* LoadFileWindowController.h */,
+				5AD36AE226E207EB0056E1E7 /* LoadFileWindowController.m */,
+				5AD36AE326E207EB0056E1E7 /* LoadFileWindowController.xib */,
+				5AD36ADC26E1EDA60056E1E7 /* Tool */,
+				5AD36ADD26E1EF180056E1E7 /* Request */,
 				5AB04FCC26DA59E900F7B167 /* Assets.xcassets */,
 				5AB04FCE26DA59E900F7B167 /* Main.storyboard */,
 				5AB04FD126DA59E900F7B167 /* Info.plist */,
@@ -145,6 +157,43 @@
 				5AB0509626DA844600F7B167 /* AFHTTPSessionManager.h */,
 			);
 			path = AFNetworking;
+			sourceTree = "<group>";
+		};
+		5AD36ADC26E1EDA60056E1E7 /* Tool */ = {
+			isa = PBXGroup;
+			children = (
+				5AEA34A726E0FC1C00794261 /* ChoosePathTool.h */,
+				5AEA34A826E0FC1C00794261 /* ChoosePathTool.m */,
+				5AEA34AA26E0FC3800794261 /* ConvertFileTool.h */,
+				5AEA34AB26E0FC3800794261 /* ConvertFileTool.m */,
+				5AEA34AD26E0FC4800794261 /* DownloadFileTool.h */,
+				5AEA34AE26E0FC4800794261 /* DownloadFileTool.m */,
+				5AEA34B026E0FC7F00794261 /* CombineFileTool.h */,
+				5AEA34B126E0FC7F00794261 /* CombineFileTool.m */,
+				5AD36AD926E1AA440056E1E7 /* LogMsgTool.h */,
+				5AD36ADA26E1AA440056E1E7 /* LogMsgTool.m */,
+				5AB04FE026DA5BEF00F7B167 /* NSData+BY.h */,
+				5AB04FE126DA5BEF00F7B167 /* NSData+BY.m */,
+				5A659B1F26DCD46A0038B355 /* NSDate+BY.h */,
+				5A659B2026DCD46A0038B355 /* NSDate+BY.m */,
+				5AB04FDD26DA5B0800F7B167 /* BYFileTreeModel.h */,
+				5AB04FDE26DA5B0800F7B167 /* BYFileTreeModel.m */,
+				5AB04FDA26DA5AC800F7B167 /* NSFileManager+BY.h */,
+				5AB04FDB26DA5AC800F7B167 /* NSFileManager+BY.m */,
+			);
+			path = Tool;
+			sourceTree = "<group>";
+		};
+		5AD36ADD26E1EF180056E1E7 /* Request */ = {
+			isa = PBXGroup;
+			children = (
+				5AB0509E26DA8AEB00F7B167 /* RBasePresenter.h */,
+				5AB0509D26DA8AEB00F7B167 /* RBasePresenter.m */,
+				5AB050A126DA8B9A00F7B167 /* RFNetworking.h */,
+				5AB050A026DA8B9A00F7B167 /* RFNetworking.m */,
+				5AB0508926DA844600F7B167 /* AFNetworking */,
+			);
+			path = Request;
 			sourceTree = "<group>";
 		};
 		5FD7B8BEC87E99DB6EF868DB /* Frameworks */ = {
@@ -222,6 +271,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5AB04FCD26DA59E900F7B167 /* Assets.xcassets in Resources */,
+				5AD36AE526E207EB0056E1E7 /* LoadFileWindowController.xib in Resources */,
 				5AB04FD026DA59E900F7B167 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -261,15 +311,21 @@
 				5AB0509926DA844600F7B167 /* AFURLSessionManager.m in Sources */,
 				5AB050A226DA8B9A00F7B167 /* RFNetworking.m in Sources */,
 				5AB04FCB26DA59E900F7B167 /* ViewController.m in Sources */,
+				5AD36AE426E207EB0056E1E7 /* LoadFileWindowController.m in Sources */,
 				5AB04FE226DA5BEF00F7B167 /* NSData+BY.m in Sources */,
 				5AB04FD326DA59E900F7B167 /* main.m in Sources */,
 				5AB0509C26DA844600F7B167 /* AFSecurityPolicy.m in Sources */,
+				5AD36ADB26E1AA440056E1E7 /* LogMsgTool.m in Sources */,
 				5AB04FC826DA59E900F7B167 /* AppDelegate.m in Sources */,
+				5AEA34A926E0FC1C00794261 /* ChoosePathTool.m in Sources */,
 				5A659B2126DCD46A0038B355 /* NSDate+BY.m in Sources */,
+				5AEA34AF26E0FC4800794261 /* DownloadFileTool.m in Sources */,
 				5AB04FDF26DA5B0800F7B167 /* BYFileTreeModel.m in Sources */,
 				5AB0509726DA844600F7B167 /* AFURLResponseSerialization.m in Sources */,
 				5AB0509A26DA844600F7B167 /* AFURLRequestSerialization.m in Sources */,
+				5AEA34B226E0FC7F00794261 /* CombineFileTool.m in Sources */,
 				5AB0509F26DA8AEB00F7B167 /* RBasePresenter.m in Sources */,
+				5AEA34AC26E0FC3800794261 /* ConvertFileTool.m in Sources */,
 				5AB04FDC26DA5AC800F7B167 /* NSFileManager+BY.m in Sources */,
 				5AB0509B26DA844600F7B167 /* AFNetworkReachabilityManager.m in Sources */,
 				5AB0509826DA844600F7B167 /* AFHTTPSessionManager.m in Sources */,
@@ -422,7 +478,7 @@
 				LIBRARY_SEARCH_PATHS = "";
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = liu.BYFiles;
+				PRODUCT_BUNDLE_IDENTIFIER = liu.BY;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -448,7 +504,7 @@
 				LIBRARY_SEARCH_PATHS = "";
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = liu.BYFiles;
+				PRODUCT_BUNDLE_IDENTIFIER = liu.BY;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

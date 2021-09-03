@@ -39,10 +39,9 @@ NS_ASSUME_NONNULL_BEGIN
 +(NSString *)createPath:(NSString *)pathName finish:(BYFileOperationFinish)finish;
 
 /// 创建文件
-/// @param file 文件名
-/// @param path 文件路径 不带文件名和最后一层目录的斜杠
+/// @param filePath 文件路径
 /// @param finish 完成回调
-+(NSString *)createFile:(NSString *)file inPath:(NSString *)path finish:(BYFileOperationFinish)finish;
++(NSString *)createFile:(NSString *)filePath finish:(BYFileOperationFinish)finish;
 
 /// 写入文件
 /// @param data 写入的内容
