@@ -16,6 +16,11 @@
 @property (nonatomic, strong) BYFileTreeModel *fileModel;
 @property (nonatomic, assign) NSInteger fileIndex;
 @property (unsafe_unretained) IBOutlet NSTextView *msgTextView;
+@property (nonatomic, strong) NSString *categoryFolderPath;
+@property (nonatomic, strong) NSString *tsFilesPath;
+
+@property (nonatomic, strong) NSString *sourcePath;
+@property (nonatomic, strong) NSString *orderPath;
 
 @end
 
@@ -23,71 +28,110 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.fileIndex = 0;
-    [self updateMsg:@"请选择路径"];
+//    self.fileIndex = 0;
+//    self.tsFilesPath = [NSString stringWithFormat:@"%@/TSFiles", [NSFileManager documentPath]];
+//    [NSFileManager createPath:self.tsFilesPath finish:^(BOOL isSuc, NSString * _Nullable msg) {
+//
+//    }];
+    
+    
 }
 
 -(void)updateMsg:(NSString *)msg {
-    NSString *dateStr = [NSDate stringWithDate:[NSDate date] type:(BY_DateFormatterType_ymdhms)];
-    if(self.msgTextView.string.length == 0) {
-        self.msgTextView.string = [NSString stringWithFormat:@"%@:%@", dateStr, msg];
-    } else {
-        self.msgTextView.string = [NSString stringWithFormat:@"%@\n%@:%@", self.msgTextView.string, dateStr, msg];
-    }
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        NSString *dateStr = [NSDate stringWithDate:[NSDate date] type:(BY_DateFormatterType_ymdhms)];
+        if(self.msgTextView.string.length == 0) {
+            self.msgTextView.string = [NSString stringWithFormat:@"%@:%@", dateStr, msg];
+        } else {
+            self.msgTextView.string = [NSString stringWithFormat:@"%@:%@\n%@", dateStr, msg, self.msgTextView.string];
+        }
+    });
 }
 
 - (IBAction)choosePath:(id)sender {
     [self openPanelCanChooseFiles:NO finish:^(NSString *path) {
-        self.fileIndex = 0;
-        [self updateMsg:[NSString stringWithFormat:@"选择的路径为：%@", path]];
-        self.fileModel = [NSFileManager loadFilesInPath:path level:@0 isContinue:YES];
-        if(self.fileModel.files.count > 0) {
-            [self updateMsg:[NSString stringWithFormat:@"当前路径下共有%ld个文件", self.fileModel.files.count]];
-            [self beginDownloadNextFile];
-        } else {
-            [self updateMsg:@"当前目录无文件"];
-        }
+        
     }];
+//    NSString *dateStr = [NSDate stringWithDate:[NSDate date] type:(BY_DateFormatterType_ymdhms)];
+//    self.categoryFolderPath = [NSString stringWithFormat:@"%@/%@",[NSFileManager documentPath], [NSString stringWithFormat:@"videosFolder_%@", dateStr]];
+//    [NSFileManager createPath:self.categoryFolderPath finish:^(BOOL isSuc, NSString * _Nullable msg) {
+//        [self updateMsg:[NSString stringWithFormat:@"%@  %@", msg, self.categoryFolderPath]];
+//    }];
+//    [self appendUrl];
 }
 
 -(void)appendUrl {
+    __weak typeof(self) weakSelf = self;
     [self openPanelCanChooseFiles:NO finish:^(NSString *path) {
+        __weak typeof(weakSelf) strongSelf = weakSelf;
         BYFileTreeModel *model = [NSFileManager loadFilesInPath:path level:@0 isContinue:YES];
-        for (int i = 0; i < model.subPaths.count; i++) {
-            BYFileTreeModel *subModel = model.subPaths[i];
-            for (int j = 0; j < subModel.files.count; j++) {
-                BYFileModel *file = subModel.files[j];
-                if([file.fileName rangeOfString:@".m3u8"].length > 0) {
-                    NSData *data = [NSFileManager readFileDataWithFilePath:file.filePath];
-                    NSString *str = [data dataToString];
-                    while ([str rangeOfString:@"transcode_"].length > 0) {
-                        str = [str stringByReplacingOccurrencesOfString:@"transcode_" withString:[NSString stringWithFormat:@"https://play-tx-ugcpub.douyucdn2.cn/live/%@/++--++", subModel.pathName]];
+        NSString *listFilePath = [NSString stringWithFormat:@"%@/%.0lf", [NSFileManager documentPath], [[NSDate date] timeIntervalSince1970]];
+        [NSFileManager createPath:listFilePath finish:^(BOOL isSuc, NSString * _Nullable msg) {
+            NSMutableArray *mArr = [NSMutableArray new];
+            NSMutableArray *names = [NSMutableArray new];
+            for (int i = 0; i < model.subPaths.count; i++) {
+                BYFileTreeModel *subModel = model.subPaths[i];
+                [names addObject:subModel.pathName];
+                for (int j = 0; j < subModel.files.count; j++) {
+                    BYFileModel *file = subModel.files[j];
+                    if([file.fileName rangeOfString:@".m3u8"].length > 0) {
+                        [mArr addObject:file];
+                        break;
                     }
-                    while ([str rangeOfString:@"++--++"].length > 0) {
-                        str = [str stringByReplacingOccurrencesOfString:@"++--++" withString:@"transcode_"];
-                    }
-                    NSString *newFile = [NSString stringWithFormat:@"%@/minana_%.0lf.m3u8", [NSFileManager cachePath], [[NSDate date] timeIntervalSince1970]];
-                    __weak typeof(self) weakSelf = self;
-                    [NSFileManager writeData:[NSData dataWithString:str] toFile:newFile finish:^(BOOL isSuc, NSString * _Nullable msg) {
-                        NSLog(@"%@ %@", msg, newFile);
-                        __weak typeof(weakSelf) strongSelf = weakSelf;
-                        [strongSelf dealPlayListWithFilePath:newFile];
-                    }];
-                    break;
                 }
             }
-        }
+            [strongSelf writeFileIndex:0 array:mArr names:names listFilePath:listFilePath];
+        }];
+        
+    }];
+}
+
+-(void)writeFileIndex:(NSInteger)index array:(NSArray *)array names:(NSArray *)names listFilePath:(NSString *)listFilePath {
+    if(index == array.count) {
+        __weak typeof(self) weakSelf = self;
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            __weak typeof(weakSelf) strongSelf = weakSelf;
+            strongSelf.fileModel = [NSFileManager loadFilesInPath:listFilePath level:@0 isContinue:YES];
+            if(strongSelf.fileModel.files.count > 0) {
+                [strongSelf updateMsg:[NSString stringWithFormat:@"当前路径下共有%ld个文件", strongSelf.fileModel.files.count]];
+                [strongSelf beginDownloadNextFile];
+            } else {
+                [strongSelf updateMsg:@"当前目录无文件"];
+            }
+        });
+        return;
+    }
+    BYFileModel *subModel = array[index];
+    NSData *data = [NSFileManager readFileDataWithFilePath:subModel.filePath];
+    NSString *str = [data dataToString];
+    while ([str rangeOfString:@"transcode_"].length > 0) {
+        str = [str stringByReplacingOccurrencesOfString:@"transcode_" withString:[NSString stringWithFormat:@"https://play-tx-recpub.douyucdn2.cn/live/%@/++--++", names[index]]];
+    }
+    while ([str rangeOfString:@"++--++"].length > 0) {
+        str = [str stringByReplacingOccurrencesOfString:@"++--++" withString:@"transcode_"];
+    }
+    NSString *newFile = [NSString stringWithFormat:@"%@/file_%.0lf.m3u8", listFilePath, [[NSDate date] timeIntervalSince1970]];
+    __weak typeof(self) weakSelf = self;
+    [NSFileManager writeData:[NSData dataWithString:str] toFile:newFile finish:^(BOOL isSuc, NSString * _Nullable msg) {
+        __weak typeof(weakSelf) strongSelf = weakSelf;
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [strongSelf writeFileIndex:index+1 array:array names:names listFilePath:listFilePath];
+        });
     }];
 }
 
 -(void)beginDownloadNextFile {
     if(self.fileIndex >= self.fileModel.files.count) {
+        [self updateMsg:@"下载完成！！！！"];
         return;
     }
     BYFileModel *file = self.fileModel.files[self.fileIndex];
     if([file.fileName rangeOfString:@".m3u8"].length > 0) {
         [self dealPlayListWithFilePath:file.filePath];
         self.fileIndex++;
+    } else {
+        self.fileIndex++;
+        [self beginDownloadNextFile];
     }
 }
 
@@ -121,20 +165,20 @@
         fileType = @"ts";
     }
     NSString *fileName = [NSString stringWithFormat:@"video_%ld.%@", (long)index, fileType];
-    NSString *caches = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
-    NSString *destinationPath = [caches stringByAppendingPathComponent:fileName];
+    NSString *destinationPath = [self.tsFilesPath stringByAppendingPathComponent:fileName];
     if ([[NSFileManager defaultManager] fileExistsAtPath:destinationPath]) {
         [self downloadVideoWithArr:listArr andIndex:index+1 videoName:videoName];
         return;
     }
     
-    __weak typeof(self)wkSelf = self;
+    __weak typeof(self) weakSelf = self;
     [self downloadURL:fileUrl destinationPath:destinationPath progress:nil completion:^(NSURLResponse *response, NSURL *filePath, NSError *error) {
+        __weak typeof(weakSelf) strongSelf = weakSelf;
         if (!error) {
-            [self updateMsg:[NSString stringWithFormat:@"文件\"%@\"下载成功!", fileUrl]];
-            [wkSelf downloadVideoWithArr:listArr andIndex:index+1 videoName:videoName];
+            [strongSelf updateMsg:[NSString stringWithFormat:@"文件\"%@\"下载成功!", fileUrl]];
+            [strongSelf downloadVideoWithArr:listArr andIndex:index+1 videoName:videoName];
         } else {
-            [self updateMsg:[NSString stringWithFormat:@"下载失败:%@", error.localizedDescription]];
+            [strongSelf updateMsg:[NSString stringWithFormat:@"下载失败:%@", error.localizedDescription]];
         }
     }];
 }
@@ -176,20 +220,15 @@
 // 合成为一个ts文件
 - (void)combVideos {
     [self updateMsg:@"开始合并数据"];
-    NSString *fileName = [NSString stringWithFormat:@"video_%.0lf.mp4", [[NSDate date] timeIntervalSince1970] ];
-    NSString *filePath = [[NSFileManager documentPath] stringByAppendingPathComponent:fileName];
-    if ([[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
-        return;
-    }
-    
-    NSArray *contentArr = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:[NSFileManager cachePath] error:nil];
+    NSString *filePath = [NSString stringWithFormat:@"%@/video_%.0lf.mp4", self.categoryFolderPath, [[NSDate date] timeIntervalSince1970]];
+    NSArray *contentArr = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:self.tsFilesPath error:nil];
     NSMutableData *dataArr = [NSMutableData alloc];
     int videoCount = 0;
     for (NSString *str in contentArr) {
         // 按顺序拼接 TS 文件
         if ([str containsString:@"video_"]) {
-            NSString *videoName = [NSString stringWithFormat:@"video_%d.%@",videoCount, str.pathExtension];
-            NSString *videoPath = [[NSFileManager cachePath] stringByAppendingPathComponent:videoName];
+            NSString *videoName = [NSString stringWithFormat:@"video_%d.%@", videoCount, str.pathExtension];
+            NSString *videoPath = [self.tsFilesPath stringByAppendingPathComponent:videoName];
             // 读出数据
             NSData *data = [[NSData alloc] initWithContentsOfFile:videoPath];
             // 合并数据
@@ -200,12 +239,16 @@
             }];
         }
     }
+    __weak typeof(self) weakSelf = self;
     [NSFileManager writeData:dataArr toFile:filePath finish:^(BOOL isSuc, NSString * _Nullable msg) {
-        [self updateMsg:[NSString stringWithFormat:@"%@  %@", msg, filePath]];
-        [self updateMsg:@"3秒后开始下一个文件下载"];
-        sleep(3);
-        [self beginDownloadNextFile];
+        __weak typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf updateMsg:[NSString stringWithFormat:@"%@  %@", msg, filePath]];
     }];
+    [self updateMsg:@"2秒后开始下一个文件下载"];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        __weak typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf beginDownloadNextFile];
+    });
 }
 
 -(void)openPanelCanChooseFiles:(BOOL)canChooseFiles finish:(void(^)(NSString *path))finish {
@@ -230,7 +273,34 @@
     }];
 }
 
+#pragma mark - single function
 
+-(void)moveFile {
+    __weak typeof(self) weakSelf = self;
+    [self openPanelCanChooseFiles:NO finish:^(NSString *path) {
+        __weak typeof(weakSelf) strongSelf = weakSelf;
+        strongSelf.sourcePath = path;
+        BYFileTreeModel *model = [NSFileManager loadFilesInPath:path level:@0 isContinue:YES];
+        for (int i = 0; i < model.subPaths.count; i++) {
+            BYFileTreeModel *subModel = model.subPaths[i];
+            for (int j = 0; j < subModel.files.count; j++) {
+                BYFileModel *fileModel = subModel.files[j];
+                strongSelf.orderPath = [NSString stringWithFormat:@"%@/%@", strongSelf.sourcePath, fileModel.fileName];
+                NSError *error = nil;
+                BOOL isSuc = [[NSFileManager defaultManager] moveItemAtPath:fileModel.filePath toPath:strongSelf.orderPath error:&error];
+                if(isSuc) {
+                    [strongSelf updateMsg:[NSString stringWithFormat:@"移动完成 %@", strongSelf.orderPath]];
+                    [NSFileManager deleteFile:[NSString stringWithFormat:@"%@/%@", strongSelf.sourcePath, subModel.pathName] finish:^(BOOL isSuc, NSString * _Nullable msg) {
+                        [strongSelf updateMsg:[NSString stringWithFormat:@"文件夹操作: %@", msg]];
+                    }];
+                } else {
+                    [strongSelf updateMsg:[NSString stringWithFormat:@"移动失败: %@", error.localizedDescription]];
+                }
+            }
+            
+        }
+    }];
+}
 
 @end
 
