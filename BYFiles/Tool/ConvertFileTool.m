@@ -14,7 +14,7 @@
 @implementation ConvertFileTool
 
 +(void)convertFilePath:(NSString *)filePath toPath:(NSString *)orderPath baseURLStr:(NSString *)baseURLStr log:(void (^)(NSString *msg))log completion:(void (^)(NSString *filePath))completion {
-    NSString *dateStr = [NSDate stringWithDate:[NSDate date] type:(BY_DateFormatterType_ymdhms)];
+    NSString *dateStr = [NSDate stringWithDate:[NSDate date] formatStr:@"yyyyMMddHHmmss"];
     NSData *data = [NSFileManager readFileDataWithFilePath:filePath];
     NSString *str = [data dataToString];
     while ([str rangeOfString:@"transcode_"].length > 0) {

@@ -13,8 +13,17 @@
 
 @implementation LoadFileWindowController
 
-- (instancetype)init {
-    self = [super init];
+- (instancetype)initWithCoder:(NSCoder *)coder
+{
+    self = [super initWithCoder:coder];
+    if (self) {
+        [self.window makeKeyWindow];
+    }
+    return self;
+}
+
+- (instancetype)initWithWindow:(NSWindow *)window {
+    self = [super initWithWindow:window];
     if (self) {
         self.fileIndex = 0;
         self.stateLabel.stringValue = @"";
@@ -22,19 +31,31 @@
         self.progressView.maxValue = 100;
         self.progressView.doubleValue = 0;
         self.progressView.indeterminate = NO;
+        [self createTmpPath];
+        [self.window makeKeyWindow];
     }
     return self;
 }
 
 - (IBAction)choosePath:(id)sender {
+    [self resetParam];
     [self createTmpPath];
     [self appendUrl];
 }
 
 #pragma mark - private
 
+-(void)resetParam {
+    self.fileIndex = 0;
+    self.stateLabel.stringValue = @"";
+    self.progressView.minValue = 0;
+    self.progressView.maxValue = 100;
+    self.progressView.doubleValue = 0;
+    self.progressView.indeterminate = NO;
+}
+
 -(void)createTmpPath {
-    NSString *dateStr = [NSDate stringWithDate:[NSDate date] type:(BY_DateFormatterType_ymdhms)];
+    NSString *dateStr = [NSDate stringWithDate:[NSDate date] formatStr:@"yyyyMMddHHmmss"];
     
     self.sourcePath = [NSString stringWithFormat:@"%@/%@", [NSFileManager cachePath], dateStr];
     if(![[NSFileManager defaultManager] fileExistsAtPath:self.sourcePath]) {
@@ -45,14 +66,14 @@
         }];
     }
     
-    self.tsFilesPath = [NSString stringWithFormat:@"%@/TSFiles", self.sourcePath];
+    self.tsFilesPath = [NSString stringWithFormat:@"%@/TmpFolder", self.sourcePath];
     if(![[NSFileManager defaultManager] fileExistsAtPath:self.tsFilesPath]) {
         [NSFileManager createPath:self.tsFilesPath finish:^(BOOL isSuc, NSString * _Nullable msg) {
             
         }];
     }
     
-    self.categoryFolderPath = [NSString stringWithFormat:@"%@/%@", self.sourcePath, [NSString stringWithFormat:@"videosFolder_%@", dateStr]];
+    self.categoryFolderPath = [NSString stringWithFormat:@"%@/%@", self.sourcePath, [NSString stringWithFormat:@"outputFolder"]];
     if(![[NSFileManager defaultManager] fileExistsAtPath:self.categoryFolderPath]) {
         __weak typeof(self) weakSelf = self;
         [NSFileManager createPath:self.categoryFolderPath finish:^(BOOL isSuc, NSString * _Nullable msg) {
@@ -100,6 +121,7 @@
         });
         return;
     }
+    
     __weak typeof(self) weakSelf = self;
     BYFileModel *subModel = array[index];
     [ConvertFileTool convertFilePath:subModel.filePath toPath:self.sourcePath baseURLStr:@"https://play-tx-recpub.douyucdn2.cn/live" log:^(NSString * _Nonnull msg) {
@@ -140,18 +162,18 @@
     }
     // 下载文件
     __weak typeof(self) weakSelf = self;
-    [DownloadFileTool downloadVideoWithArr:listArr andIndex:0 log:^(NSString * _Nonnull msg) {
+    [DownloadFileTool downloadVideoWithArr:listArr andIndex:0 cacheFilePath:self.tsFilesPath log:^(NSString * _Nonnull msg) {
         __weak typeof(weakSelf) strongSelf = weakSelf;
         [strongSelf updateMsg:msg];
     } progress:^(NSProgress * _Nonnull downloadProgress, NSString * _Nonnull downloadingUrl) {
         __weak typeof(weakSelf) strongSelf = weakSelf;
         dispatch_async(dispatch_get_main_queue(), ^{
-            strongSelf.progressView.doubleValue = downloadProgress.completedUnitCount/downloadProgress.totalUnitCount*100;
+            strongSelf.progressView.doubleValue = downloadProgress.completedUnitCount*100./downloadProgress.totalUnitCount;
             strongSelf.stateLabel.stringValue = downloadingUrl;
         });
     } completion:^(NSString * _Nonnull filePath) {
         __weak typeof(weakSelf) strongSelf = weakSelf;
-        [CombineFileTool combVideosInPath:filePath log:^(NSString * _Nonnull msg) {
+        [CombineFileTool combVideosInPath:filePath outputPath:self.categoryFolderPath log:^(NSString * _Nonnull msg) {
             [strongSelf updateMsg:msg];
         } completion:^(NSString * _Nonnull filePath) {
             [strongSelf beginDownloadNextFile];

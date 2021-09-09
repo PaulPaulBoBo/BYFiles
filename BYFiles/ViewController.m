@@ -23,6 +23,9 @@
 }
 
 - (IBAction)choosePath:(id)sender {
+    self.firstVC = nil;
+    self.secVC = nil;
+    self.thirVC = nil;
     [self.firstVC.window orderFront:nil];
     [self.secVC.window orderFront:nil];
     [self.thirVC.window orderFront:nil];

@@ -25,7 +25,7 @@ static NSString *MSGLOG = @"";
     }
     NSLog(@"%@", msg);
     NSString *dateStr = [NSDate stringWithDate:[NSDate date] type:(BY_DateFormatterType_ymdhms)];
-    NSString *logFilePath = [self checkLogFile:dateStr];
+    NSString *logFilePath = [self checkLogFile];
     if(MSGLOG.length == 0) {
         MSGLOG = [NSString stringWithFormat:@"%@:%@", dateStr, msg];
     } else {
@@ -43,9 +43,9 @@ static NSString *MSGLOG = @"";
 
 #pragma mark - private
 
-+ (NSString *)checkLogFile:(NSString *)dateStr {
-    NSString *logPath = [NSString stringWithFormat:@"%@log", [NSFileManager tmpPath]];
-    NSString *logFileName = [NSString stringWithFormat:@"log_%@.txt", dateStr];
++ (NSString *)checkLogFile {
+    NSString *logPath = [NSString stringWithFormat:@"%@/log", [NSFileManager cachePath]];
+    NSString *logFileName = @"log.txt";
     NSString *logFilePath = [NSString stringWithFormat:@"%@/%@", logPath, logFileName];
     if(![[NSFileManager defaultManager] fileExistsAtPath:logPath]) {
         [NSFileManager createPath:logPath finish:^(BOOL isSuc, NSString * _Nullable msg) {

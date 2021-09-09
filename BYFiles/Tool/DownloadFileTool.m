@@ -20,27 +20,32 @@
 
 // 循环下载 ts 文件
 + (void)downloadVideoWithArr:(NSArray *)listArr
-                          andIndex:(NSInteger)index
-                               log:(void (^)(NSString *msg))log
-                          progress:(void (^)(NSProgress *downloadProgress, NSString *downloadingUrl))progress
-                          completion:(void (^)(NSString *filePath))completion {
+                    andIndex:(NSInteger)index
+               cacheFilePath:(NSString *)cacheFilePath
+                         log:(void (^)(NSString *msg))log
+                    progress:(void (^)(NSProgress *downloadProgress, NSString *downloadingUrl))progress
+                  completion:(void (^)(NSString *filePath))completion {
     NSString *fileUrl = listArr[index];
     NSString *fileType = [[fileUrl componentsSeparatedByString:@"?"].firstObject componentsSeparatedByString:@"."].lastObject;
     if(fileType == nil || fileType.length == 0) {
         fileType = @"ts";
     }
-    NSString *fileName = [NSString stringWithFormat:@"video_%ld.%@", (long)index, fileType];
-    NSString *dateStr = [NSDate stringWithDate:[NSDate date] type:(BY_DateFormatterType_ymdhms)];
-    NSString *filesCachePath = [NSString stringWithFormat:@"%@/%@", [NSFileManager cachePath], dateStr];
+    NSString *fileName = [NSString stringWithFormat:@"file_%ld.%@", (long)index, fileType];
     if (index >= listArr.count) {
         if(completion) {
-            completion(filesCachePath);
+            completion(cacheFilePath);
         }
     }
-    if ([[NSFileManager defaultManager] fileExistsAtPath:filesCachePath]) {
-        [DownloadFileTool downloadVideoWithArr:listArr andIndex:index+1 log:log progress:progress completion:completion];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:[NSString stringWithFormat:@"%@/%@", cacheFilePath, fileName]]) {
+        if(index+1 < listArr.count) {
+            [DownloadFileTool downloadVideoWithArr:listArr andIndex:index+1 cacheFilePath:cacheFilePath log:log progress:progress completion:completion];
+        } else {
+            if(completion) {
+                completion(cacheFilePath);
+            }
+        }
     } else {
-        [DownloadFileTool downloadURL:fileUrl destinationPath:[NSString stringWithFormat:@"%@/%@", filesCachePath, fileName] progress:^(NSProgress * _Nonnull downloadProgress) {
+        [DownloadFileTool downloadURL:fileUrl destinationPath:[NSString stringWithFormat:@"%@/%@", cacheFilePath, fileName] progress:^(NSProgress * _Nonnull downloadProgress) {
             if(progress) {
                 progress(downloadProgress, fileUrl);
             }
@@ -49,7 +54,13 @@
                 if(log) {
                     log([NSString stringWithFormat:@"文件\"%@\"下载成功!", fileUrl]);
                 }
-                [DownloadFileTool downloadVideoWithArr:listArr andIndex:index+1 log:log progress:progress completion:completion];
+                if(index+1 < listArr.count) {
+                    [DownloadFileTool downloadVideoWithArr:listArr andIndex:index+1 cacheFilePath:cacheFilePath log:log progress:progress completion:completion];
+                } else {
+                    if(completion) {
+                        completion(cacheFilePath);
+                    }
+                }
             } else {
                 if(log) {
                     log([NSString stringWithFormat:@"下载失败:%@", error.localizedDescription]);
