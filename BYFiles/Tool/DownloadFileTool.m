@@ -26,6 +26,9 @@
                     progress:(void (^)(NSProgress *downloadProgress, NSString *downloadingUrl))progress
                   completion:(void (^)(NSString *filePath))completion {
     NSString *fileUrl = listArr[index];
+    if([fileUrl rangeOfString:@","].length > 0) {
+        fileUrl = [fileUrl componentsSeparatedByString:@","].lastObject;
+    }
     NSString *fileType = [[fileUrl componentsSeparatedByString:@"?"].firstObject componentsSeparatedByString:@"."].lastObject;
     if(fileType == nil || fileType.length == 0) {
         fileType = @"ts";

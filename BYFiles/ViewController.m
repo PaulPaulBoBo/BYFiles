@@ -11,8 +11,6 @@
 @interface ViewController ()
 
 @property (nonatomic, strong) LoadFileWindowController *firstVC;
-@property (nonatomic, strong) LoadFileWindowController *secVC;
-@property (nonatomic, strong) LoadFileWindowController *thirVC;
 
 @end
 
@@ -24,11 +22,7 @@
 
 - (IBAction)choosePath:(id)sender {
     self.firstVC = nil;
-    self.secVC = nil;
-    self.thirVC = nil;
     [self.firstVC.window orderFront:nil];
-    [self.secVC.window orderFront:nil];
-    [self.thirVC.window orderFront:nil];
 }
 
 -(LoadFileWindowController *)firstVC {
@@ -36,20 +30,6 @@
         _firstVC = [[LoadFileWindowController alloc] initWithWindowNibName:@"LoadFileWindowController"];
     }
     return _firstVC;
-}
-
--(LoadFileWindowController *)secVC {
-    if(_secVC == nil) {
-        _secVC = [[LoadFileWindowController alloc] initWithWindowNibName:@"LoadFileWindowController"];
-    }
-    return _secVC;
-}
-
--(LoadFileWindowController *)thirVC {
-    if(_thirVC == nil) {
-        _thirVC = [[LoadFileWindowController alloc] initWithWindowNibName:@"LoadFileWindowController"];
-    }
-    return _thirVC;
 }
 
 @end

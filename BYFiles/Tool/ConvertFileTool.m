@@ -18,7 +18,7 @@
     NSData *data = [NSFileManager readFileDataWithFilePath:filePath];
     NSString *str = [data dataToString];
     while ([str rangeOfString:@"transcode_"].length > 0) {
-        str = [str stringByReplacingOccurrencesOfString:@"transcode_" withString:[NSString stringWithFormat:@"%@/%@/++--++", baseURLStr, @""]];
+        str = [str stringByReplacingOccurrencesOfString:@"transcode_" withString:[NSString stringWithFormat:@"%@++--++", baseURLStr]];
     }
     while ([str rangeOfString:@"++--++"].length > 0) {
         str = [str stringByReplacingOccurrencesOfString:@"++--++" withString:@"transcode_"];

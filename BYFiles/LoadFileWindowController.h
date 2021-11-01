@@ -25,7 +25,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) BYFileTreeModel *fileModel;
 @property (nonatomic, assign) NSInteger fileIndex;
+@property (nonatomic, strong) NSString *mPath;
+@property (nonatomic, strong) NSString *mFilePath;
 @property (nonatomic, strong) NSString *sourcePath;
+@property (nonatomic, strong) NSString *transMPath;
 @property (nonatomic, strong) NSString *categoryFolderPath;
 @property (nonatomic, strong) NSString *tsFilesPath;
 @property (nonatomic, copy) NSString *downloadingUrl;

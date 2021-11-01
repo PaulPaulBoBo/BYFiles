@@ -9,12 +9,16 @@
 
 @interface LoadFileWindowController ()
 
+@property (weak) IBOutlet NSTextField *mUrl;
+
+/** baseUrl */
+@property (nonatomic, strong) NSString *baseUrl;
+
 @end
 
 @implementation LoadFileWindowController
 
-- (instancetype)initWithCoder:(NSCoder *)coder
-{
+- (instancetype)initWithCoder:(NSCoder *)coder {
     self = [super initWithCoder:coder];
     if (self) {
         [self.window makeKeyWindow];
@@ -22,25 +26,16 @@
     return self;
 }
 
-- (instancetype)initWithWindow:(NSWindow *)window {
-    self = [super initWithWindow:window];
-    if (self) {
-        self.fileIndex = 0;
-        self.stateLabel.stringValue = @"";
-        self.progressView.minValue = 0;
-        self.progressView.maxValue = 100;
-        self.progressView.doubleValue = 0;
-        self.progressView.indeterminate = NO;
+- (IBAction)start:(id)sender {
+    if(self.mUrl.stringValue.length > 0 && [self.mUrl.stringValue rangeOfString:@"playlist.m3u8"].length > 0) {
+        [self resetParam];
         [self createTmpPath];
-        [self.window makeKeyWindow];
+        self.baseUrl = [self.mUrl.stringValue componentsSeparatedByString:@"playlist.m3u8"].firstObject;
+        [self downloadMFile];
+        [ChoosePathTool openFinderPath:self.mPath];
+    } else {
+        [LogMsgTool updateMsg:[NSString stringWithFormat:@"地址无效，请重新输入:%@", self.mUrl.stringValue] toTextView:self.msgTextView];
     }
-    return self;
-}
-
-- (IBAction)choosePath:(id)sender {
-    [self resetParam];
-    [self createTmpPath];
-    [self appendUrl];
 }
 
 #pragma mark - private
@@ -56,13 +51,39 @@
 
 -(void)createTmpPath {
     NSString *dateStr = [NSDate stringWithDate:[NSDate date] formatStr:@"yyyyMMddHHmmss"];
-    
     self.sourcePath = [NSString stringWithFormat:@"%@/%@", [NSFileManager cachePath], dateStr];
     if(![[NSFileManager defaultManager] fileExistsAtPath:self.sourcePath]) {
         __weak typeof(self) weakSelf = self;
         [NSFileManager createPath:self.sourcePath finish:^(BOOL isSuc, NSString * _Nullable msg) {
             __weak typeof(weakSelf) strongSelf = weakSelf;
             [strongSelf updateMsg:[NSString stringWithFormat:@"文件夹创建成功 %@", strongSelf.sourcePath]];
+        }];
+    }
+    
+    self.mPath = [NSString stringWithFormat:@"%@/m", self.sourcePath];
+    if(![[NSFileManager defaultManager] fileExistsAtPath:self.mPath]) {
+        __weak typeof(self) weakSelf = self;
+        [NSFileManager createPath:self.mPath finish:^(BOOL isSuc, NSString * _Nullable msg) {
+            __weak typeof(weakSelf) strongSelf = weakSelf;
+            [strongSelf updateMsg:[NSString stringWithFormat:@"文件夹创建成功 %@", strongSelf.mPath]];
+        }];
+    }
+    
+    self.mFilePath = [NSString stringWithFormat:@"%@/%@.m3u8",self.mPath, dateStr];
+    if(![[NSFileManager defaultManager] fileExistsAtPath:self.mFilePath]) {
+        __weak typeof(self) weakSelf = self;
+        [NSFileManager createFile:self.mFilePath finish:^(BOOL isSuc, NSString * _Nullable msg) {
+            __weak typeof(weakSelf) strongSelf = weakSelf;
+            [strongSelf updateMsg:[NSString stringWithFormat:@"文件创建成功 %@", strongSelf.mFilePath]];
+        }];
+    }
+    
+    self.transMPath = [NSString stringWithFormat:@"%@/trans", self.sourcePath];
+    if(![[NSFileManager defaultManager] fileExistsAtPath:self.transMPath]) {
+        __weak typeof(self) weakSelf = self;
+        [NSFileManager createPath:self.transMPath finish:^(BOOL isSuc, NSString * _Nullable msg) {
+            __weak typeof(weakSelf) strongSelf = weakSelf;
+            [strongSelf updateMsg:[NSString stringWithFormat:@"文件夹创建成功 %@", strongSelf.transMPath]];
         }];
     }
     
@@ -83,26 +104,22 @@
     }
 }
 
--(void)appendUrl {
-    __weak typeof(self) weakSelf = self;
-    [ChoosePathTool openPanelCanChooseFiles:NO finish:^(NSString *path) {
-        __weak typeof(weakSelf) strongSelf = weakSelf;
-        [NSFileManager createPath:strongSelf.sourcePath finish:^(BOOL isSuc, NSString * _Nullable msg) {
-            BYFileTreeModel *model = [NSFileManager loadFilesInPath:path level:@0 isContinue:YES];
-            NSMutableArray *mArr = [NSMutableArray new];
-            for (int i = 0; i < model.subPaths.count; i++) {
-                BYFileTreeModel *subModel = model.subPaths[i];
-                for (int j = 0; j < subModel.files.count; j++) {
-                    BYFileModel *file = subModel.files[j];
-                    if([file.fileName rangeOfString:@".m3u8"].length > 0) {
-                        [mArr addObject:file];
-                        break;
-                    }
-                }
+-(void)downloadMFile {
+    NSString *dateStr = [NSDate stringWithDate:[NSDate date] formatStr:@"yyyyMMddHHmmss"];
+    [DownloadFileTool downloadURL:self.mUrl.stringValue destinationPath:[NSString stringWithFormat:@"%@/%@.m3u8",self.mPath, dateStr] progress:^(NSProgress * _Nonnull downloadProgress) {
+
+    } completion:^(NSURLResponse * _Nonnull response, NSURL * _Nonnull filePath, NSError * _Nonnull error) {
+        NSString *path = filePath.absoluteString;
+        BYFileTreeModel *model = [NSFileManager loadFilesInPath:path level:@0 isContinue:YES];
+        NSMutableArray *mArr = [NSMutableArray new];
+        for (int i = 0; i < model.files.count; i++) {
+            BYFileModel *file = model.files[i];
+            if([file.fileName rangeOfString:@".m3u8"].length > 0) {
+                [mArr addObject:file];
+                break;
             }
-            [strongSelf writeFileIndex:0 array:mArr];
-            [ChoosePathTool openFinderPath:strongSelf.sourcePath];
-        }];
+        }
+        [self writeFileIndex:0 array:mArr];
     }];
 }
 
@@ -111,7 +128,7 @@
         __weak typeof(self) weakSelf = self;
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             __weak typeof(weakSelf) strongSelf = weakSelf;
-            strongSelf.fileModel = [NSFileManager loadFilesInPath:strongSelf.sourcePath level:@0 isContinue:YES];
+            strongSelf.fileModel = [NSFileManager loadFilesInPath:strongSelf.transMPath level:@0 isContinue:YES];
             if(strongSelf.fileModel.files.count > 0) {
                 [strongSelf updateMsg:[NSString stringWithFormat:@"当前路径下共有%ld个文件", strongSelf.fileModel.files.count]];
                 [strongSelf beginDownloadNextFile];
@@ -124,7 +141,7 @@
     
     __weak typeof(self) weakSelf = self;
     BYFileModel *subModel = array[index];
-    [ConvertFileTool convertFilePath:subModel.filePath toPath:self.sourcePath baseURLStr:@"https://play-tx-recpub.douyucdn2.cn/live" log:^(NSString * _Nonnull msg) {
+    [ConvertFileTool convertFilePath:subModel.filePath toPath:self.transMPath baseURLStr:self.baseUrl log:^(NSString * _Nonnull msg) {
         __weak typeof(weakSelf) strongSelf = weakSelf;
         [strongSelf updateMsg:msg];
     } completion:^(NSString * _Nonnull filePath) {
@@ -159,6 +176,9 @@
         if ([str hasPrefix:@"http"]) {
             [listArr addObject:str];
         }
+    }
+    if(listArr.count == 0) {
+        return;
     }
     // 下载文件
     __weak typeof(self) weakSelf = self;
