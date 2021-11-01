@@ -70,13 +70,6 @@
     }
     
     self.mFilePath = [NSString stringWithFormat:@"%@/%@.m3u8",self.mPath, dateStr];
-    if(![[NSFileManager defaultManager] fileExistsAtPath:self.mFilePath]) {
-        __weak typeof(self) weakSelf = self;
-        [NSFileManager createFile:self.mFilePath finish:^(BOOL isSuc, NSString * _Nullable msg) {
-            __weak typeof(weakSelf) strongSelf = weakSelf;
-            [strongSelf updateMsg:[NSString stringWithFormat:@"文件创建成功 %@", strongSelf.mFilePath]];
-        }];
-    }
     
     self.transMPath = [NSString stringWithFormat:@"%@/trans", self.sourcePath];
     if(![[NSFileManager defaultManager] fileExistsAtPath:self.transMPath]) {
@@ -105,11 +98,10 @@
 }
 
 -(void)downloadMFile {
-    NSString *dateStr = [NSDate stringWithDate:[NSDate date] formatStr:@"yyyyMMddHHmmss"];
-    [DownloadFileTool downloadURL:self.mUrl.stringValue destinationPath:[NSString stringWithFormat:@"%@/%@.m3u8",self.mPath, dateStr] progress:^(NSProgress * _Nonnull downloadProgress) {
-
+    [DownloadFileTool downloadURL:self.mUrl.stringValue destinationPath:self.mFilePath progress:^(NSProgress * _Nonnull downloadProgress) {
+        
     } completion:^(NSURLResponse * _Nonnull response, NSURL * _Nonnull filePath, NSError * _Nonnull error) {
-        NSString *path = filePath.absoluteString;
+        NSString *path = self.mPath;
         BYFileTreeModel *model = [NSFileManager loadFilesInPath:path level:@0 isContinue:YES];
         NSMutableArray *mArr = [NSMutableArray new];
         for (int i = 0; i < model.files.count; i++) {
