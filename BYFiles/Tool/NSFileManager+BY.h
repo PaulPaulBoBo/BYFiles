@@ -13,9 +13,7 @@ typedef void(^BYFileOperationFinish)(BOOL isSuc, NSString * _Nullable msg);
 
 NS_ASSUME_NONNULL_BEGIN
 
-/**
- * 文件管理器分类
- */
+/// 提供常见路径访问、创建删除文件或文件目录、文件写入与读取方法
 @interface NSFileManager (BY)
 
 /// home 路径

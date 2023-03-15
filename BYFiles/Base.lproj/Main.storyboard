@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="18122"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21507"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -705,12 +706,14 @@
             <objects>
                 <viewController id="XfG-lQ-9wD" customClass="ViewController" sceneMemberID="viewController">
                     <view key="view" wantsLayer="YES" id="m2S-Jp-Qdl">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                        <rect key="frame" x="0.0" y="0.0" width="656" height="626"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="p2m-hW-ZST">
-                                <rect key="frame" x="186" y="125" width="107" height="32"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="p2m-hW-ZST">
+                                <rect key="frame" x="3" y="13" width="650" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="Pyt-4A-QgS"/>
+                                </constraints>
                                 <buttonCell key="cell" type="push" title="Start" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Dm7-MD-saV">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -719,12 +722,107 @@
                                     </connections>
                                 </buttonCell>
                             </button>
+                            <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MA0-LN-Cql">
+                                <rect key="frame" x="20" y="60" width="616" height="546"/>
+                                <clipView key="contentView" drawsBackground="NO" id="Zkf-D9-nca">
+                                    <rect key="frame" x="0.0" y="0.0" width="616" height="546"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <textView editable="NO" selectable="NO" importsGraphics="NO" verticallyResizable="YES" smartInsertDelete="YES" id="BLM-65-lH6">
+                                            <rect key="frame" x="0.0" y="0.0" width="616" height="918"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <color key="textColor" name="systemGreenColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="selectedControlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <size key="minSize" width="616" height="546"/>
+                                            <size key="maxSize" width="616" height="10000000"/>
+                                            <attributedString key="textStorage">
+                                                <fragment>
+                                                    <mutableString key="content">此工具用于转换代码中不合规范的注释及代码
+注释统一使用Xcode(Version 13.1 (13A1030d))自动生成的格式,相关参考文档：http://confluence-pv.saicmotor.com/x/GJiuAw
+代码规范参考：http://confluence-pv.saicmotor.com/x/M9WuAw
+
+目前不规范注释包括：
+    1. 代码与注释在同一行
+    2. 使用/** */
+    3. 注释中缺少空格
+    4. 注释中有多余空格
+    5. 多行注释使用/**\n*\n*/
+
+目前不规范注释包括：
+    1. 多余的空行
+    2. 方法中多余的空格
+    3. "{"有的换行有的不换行
+    4. #pragma mark格式不统一
+    5. @end前有的有空行，有的没有。
+
+针对以上不规范的注释及代码做出以下三类处理：
+    1. 将已有注释的格式转换
+        1.1. 所有类、方法、属性、枚举、协议、static均改为三斜杠方式注释
+        1.2. 注释中多余的空格和冒号会删掉，必要的空格会补全
+        1.3. 部分特殊注释不作处理，例如（xxx代表注释内容）：”///** xxx */“、"////"、"////////"
+        1.4. 代码和注释在一行的统一改为注释在代码前一行，与代码左对齐
+    2. 为缺少注释的类、方法、协议、属性添加注释占位
+        2.1. 类、协议、属性 添加 "&lt;#XXX#&gt;"
+        2.2. 方法按照Xcode自动生成的格式添加注释。
+    3. 代码格式规范化
+        3.1. 枚举写法不统一(部分写法："typedef NS_ENUM ("，统一改为 "typedef NS_ENUM("开头)
+        3.2. 删除多余空行
+        3.3. 删除方法中的多余空行
+        3.4. "{"统一改为同行
+        3.5. "#pragma mark"统一改为"/// MARK:"
+        3.6. "@end"前统一添加空行，有空行的不处理
+    4. 分析代码关系
+        4.1. 分析类
+        4.2. 分析属性
+        4.3. 分析方法
+        4.4. 分析继承关系
+        4.5. 分析引用关系
+    5. import引用文件规范
+        5.1. 非当前组件的头文件引用转换为&lt;模块名/类名.h&gt;
+
+按照以上规则会有以下改动：
+    1. 将注释中的多行JSON字符串中的格式空格删除
+    2. 单行中没有"{"、"("、","、"\""、"-"时，会移除所有的":"，因为部分注释的写法是 " * @param name:xxx xxx:xxx xxx: xxx"
+
+@warning: 为保证代码不受影响，请在sourcetree中使用git比对功能，将转换后的代码仔细检查并测试后，再pull request到develop分支。</mutableString>
+                                                    <attributes>
+                                                        <color key="NSColor" name="systemGreenColor" catalog="System" colorSpace="catalog"/>
+                                                        <font key="NSFont" size="13" name="PingFangSC-Regular"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                    </attributes>
+                                                </fragment>
+                                            </attributedString>
+                                            <color key="insertionPointColor" name="selectedMenuItemTextColor" catalog="System" colorSpace="catalog"/>
+                                        </textView>
+                                    </subviews>
+                                </clipView>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="182" id="6Sb-c3-FLG"/>
+                                </constraints>
+                                <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="Hyx-l5-hUV">
+                                    <rect key="frame" x="-100" y="-100" width="240" height="16"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                                <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="WVr-kd-w6i">
+                                    <rect key="frame" x="-100" y="-100" width="16" height="546"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                            </scrollView>
                         </subviews>
+                        <constraints>
+                            <constraint firstItem="p2m-hW-ZST" firstAttribute="top" secondItem="MA0-LN-Cql" secondAttribute="bottom" constant="20" symbolic="YES" id="1D3-VW-Ism"/>
+                            <constraint firstItem="p2m-hW-ZST" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="10" id="6LU-Hs-99Q"/>
+                            <constraint firstItem="MA0-LN-Cql" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="20" symbolic="YES" id="7nq-FV-Fvg"/>
+                            <constraint firstAttribute="trailing" secondItem="MA0-LN-Cql" secondAttribute="trailing" constant="20" symbolic="YES" id="De8-xT-YsY"/>
+                            <constraint firstItem="MA0-LN-Cql" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="20" symbolic="YES" id="PpB-DA-Oib"/>
+                            <constraint firstAttribute="bottom" secondItem="p2m-hW-ZST" secondAttribute="bottom" constant="20" symbolic="YES" id="hKc-P3-4GJ"/>
+                            <constraint firstAttribute="trailing" secondItem="p2m-hW-ZST" secondAttribute="trailing" constant="10" id="i1j-Rs-2jx"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="119" y="776"/>
+            <point key="canvasLocation" x="119" y="1045"/>
         </scene>
     </scenes>
 </document>

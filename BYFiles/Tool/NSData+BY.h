@@ -9,6 +9,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/// 提供data和string、array、dic的相互转换方法
 @interface NSData (BY)
 
 /// String转Data

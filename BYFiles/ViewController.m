@@ -6,13 +6,11 @@
 //
 
 #import "ViewController.h"
-#import "LoadFileWindowController.h"
+#import "MainFilesWindowController.h"
 
 @interface ViewController ()
 
-@property (nonatomic, strong) LoadFileWindowController *firstVC;
-@property (nonatomic, strong) LoadFileWindowController *secVC;
-@property (nonatomic, strong) LoadFileWindowController *thirVC;
+@property (nonatomic, strong) MainFilesWindowController *mainVC;
 
 @end
 
@@ -23,33 +21,18 @@
 }
 
 - (IBAction)choosePath:(id)sender {
-    self.firstVC = nil;
-    self.secVC = nil;
-    self.thirVC = nil;
-    [self.firstVC.window orderFront:nil];
-    [self.secVC.window orderFront:nil];
-    [self.thirVC.window orderFront:nil];
+    [self.mainVC showWindow:self];
+    [self.mainVC.window center];
+    [self.mainVC.window makeKeyWindow];
 }
 
--(LoadFileWindowController *)firstVC {
-    if(_firstVC == nil) {
-        _firstVC = [[LoadFileWindowController alloc] initWithWindowNibName:@"LoadFileWindowController"];
-    }
-    return _firstVC;
-}
+/// MARK: lazy
 
--(LoadFileWindowController *)secVC {
-    if(_secVC == nil) {
-        _secVC = [[LoadFileWindowController alloc] initWithWindowNibName:@"LoadFileWindowController"];
+- (MainFilesWindowController *)mainVC {
+    if(_mainVC == nil) {
+        _mainVC = [[MainFilesWindowController alloc] initWithWindowNibName:@"MainFilesWindowController"];
     }
-    return _secVC;
-}
-
--(LoadFileWindowController *)thirVC {
-    if(_thirVC == nil) {
-        _thirVC = [[LoadFileWindowController alloc] initWithWindowNibName:@"LoadFileWindowController"];
-    }
-    return _thirVC;
+    return _mainVC;
 }
 
 @end

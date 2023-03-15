@@ -1,5 +1,10 @@
-platform:'osx','10.0'
+platform :osx
+
+def default_pods
+    
+end
 
 target 'BYFiles' do
-
+    default_pods
 end
+

@@ -44,7 +44,8 @@
     NSString *tmpPath = pathName;
     NSFileManager *fileManager = [NSFileManager defaultManager];
     if (![fileManager fileExistsAtPath:pathName]) {
-        BOOL isSuc = [fileManager createDirectoryAtPath:pathName withIntermediateDirectories:YES attributes:nil error:nil];
+        NSError *error = nil;
+        BOOL isSuc = [fileManager createDirectoryAtPath:pathName withIntermediateDirectories:YES attributes:nil error:&error];
         if(isSuc) {
             if(finish) {
                 finish(YES, @"创建成功");
