@@ -14,38 +14,63 @@
 #define BY_UTC_TIMEZONE [NSTimeZone timeZoneWithAbbreviation:@"UTC"] // UTC时区
 #define BY_REFERENCE_DATEINTERVAL [[NSDate date] timeIntervalSinceReferenceDate]
 
+/// 日期展示格式枚举
 typedef NS_ENUM(NSUInteger, BY_DateFormatterType) {
-    BY_DateFormatterType_ym, // yyyy-MM
-    BY_DateFormatterType_ym_cn, // yyyy年MM月
-    BY_DateFormatterType_ymd, // yyyy-MM-dd
-    BY_DateFormatterType_ymd_cn, // yyyy年MM月dd日
-    BY_DateFormatterType_ymdhm, // yyyy-MM-dd HH:mm
-    BY_DateFormatterType_ymdhm_cn, // yyyy年MM月dd日 HH时mm分
-    BY_DateFormatterType_ymdhms, // yyyy-MM-dd HH:mm:ss
-    BY_DateFormatterType_ymdhms_cn, // yyyy年MM月dd日 HH时mm分ss秒
+    /// yyyy-MM
+    BY_DateFormatterType_ym,
+    /// yyyy年MM月
+    BY_DateFormatterType_ym_cn,
+    /// yyyy-MM-dd
+    BY_DateFormatterType_ymd,
+    /// yyyy年MM月dd日
+    BY_DateFormatterType_ymd_cn,
+    /// yyyy-MM-ddHH:mm
+    BY_DateFormatterType_ymdhm,
+    /// yyyy年MM月dd日HH时mm分
+    BY_DateFormatterType_ymdhm_cn,
+    /// yyyy-MM-ddHH:mm:ss
+    BY_DateFormatterType_ymdhms,
+    /// yyyy年MM月dd日HH时mm分ss秒
+    BY_DateFormatterType_ymdhms_cn,
     
-    BY_DateFormatterType_md, // MM-dd
-    BY_DateFormatterType_md_cn, // MM月dd日
-    BY_DateFormatterType_mdhm, // MM-dd HH:mm
-    BY_DateFormatterType_mdhm_cn, // MM月dd日 HH是mm分
-    BY_DateFormatterType_mdhms, // MM-dd HH:mm:ss
-    BY_DateFormatterType_mdhms_cn, // MM月dd日 HH是mm分ss秒
+    /// MM-dd
+    BY_DateFormatterType_md,
+    /// MM月dd日
+    BY_DateFormatterType_md_cn,
+    /// MM-ddHH:mm
+    BY_DateFormatterType_mdhm,
+    /// MM月dd日HH是mm分
+    BY_DateFormatterType_mdhm_cn,
+    /// MM-ddHH:mm:ss
+    BY_DateFormatterType_mdhms,
+    /// MM月dd日HH是mm分ss秒
+    BY_DateFormatterType_mdhms_cn,
     
-    BY_DateFormatterType_hm, // HH:mm
-    BY_DateFormatterType_hm_cn, // HH时mm分
-    BY_DateFormatterType_hms, // HH:mm:ss
-    BY_DateFormatterType_hms_cn, // HH时mm分ss秒
+    /// HH:mm
+    BY_DateFormatterType_hm,
+    /// HH时mm分
+    BY_DateFormatterType_hm_cn,
+    /// HH:mm:ss
+    BY_DateFormatterType_hms,
+    /// HH时mm分ss秒
+    BY_DateFormatterType_hms_cn,
     
-    BY_DateFormatterType_tw_hm, // hh:mm
-    BY_DateFormatterType_tw_hm_cn, // hh时mm分
-    BY_DateFormatterType_tw_hms, // hh:mm:ss
-    BY_DateFormatterType_tw_hms_cn, // hh时mm分ss秒
+    /// hh:mm
+    BY_DateFormatterType_tw_hm,
+    /// hh时mm分
+    BY_DateFormatterType_tw_hm_cn,
+    /// hh:mm:ss
+    BY_DateFormatterType_tw_hms,
+    /// hh时mm分ss秒
+    BY_DateFormatterType_tw_hms_cn,
     
-    BY_DateFormatterType_utc, // yyyy-MM-dd'T'HH:mm:ss.SSS'Z'
+    /// yyyy-MM-dd'T'HH:mm:ss.SSS'Z'
+    BY_DateFormatterType_utc,
 };
 
 NS_ASSUME_NONNULL_BEGIN
 
+/// 提供常用的日期处理方法 如：date格式化展示、日期比较、日期计算等
 @interface NSDate (BY)
 
 #pragma mark - 类方法
