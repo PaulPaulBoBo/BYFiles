@@ -18,6 +18,7 @@
 #import "BYFindRouterWindowController.h"
 #import "BYFindUnusedImportWindowController.h"
 #import "BYAnalyzeCommonClassUseStateWindowController.h"
+#import "MainWindowController.h"
 
 @interface MainFilesWindowController ()<BYBaseWindowControllerProtocol>
 
@@ -78,6 +79,8 @@
 - (void)windowDidLoad {
     [super windowDidLoad];
     [self setupBtnsAction];
+//    MainWindowController *mainVC = [[MainWindowController alloc] initWithWindowNibName:@"MainWindowController"];
+//    [self showNewWindow:mainVC];
 }
 
 /// MARK: Btn Actions

@@ -79,46 +79,53 @@
                                             </constraints>
                                         </customView>
                                         <stackView distribution="equalSpacing" orientation="vertical" alignment="leading" spacing="16" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YMw-W3-6lr">
-                                            <rect key="frame" x="20" y="364" width="310" height="176"/>
+                                            <rect key="frame" x="20" y="332" width="310" height="208"/>
                                             <subviews>
                                                 <button verticalHuggingPriority="750" tag="300" translatesAutoresizingMaskIntoConstraints="NO" id="GTV-Vk-jaZ">
-                                                    <rect key="frame" x="-2" y="159" width="312" height="18"/>
+                                                    <rect key="frame" x="-2" y="191" width="312" height="18"/>
                                                     <buttonCell key="cell" type="check" title="格式化方法" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="X3J-bm-Umu">
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                         <font key="font" metaFont="system"/>
                                                     </buttonCell>
                                                 </button>
                                                 <button verticalHuggingPriority="750" tag="301" translatesAutoresizingMaskIntoConstraints="NO" id="lze-AK-sWj">
-                                                    <rect key="frame" x="-2" y="127" width="312" height="18"/>
+                                                    <rect key="frame" x="-2" y="159" width="312" height="18"/>
                                                     <buttonCell key="cell" type="check" title="删除连续多空行" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="zPh-rm-dzh">
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                         <font key="font" metaFont="system"/>
                                                     </buttonCell>
                                                 </button>
                                                 <button verticalHuggingPriority="750" tag="302" translatesAutoresizingMaskIntoConstraints="NO" id="L5K-ec-jGg">
-                                                    <rect key="frame" x="-2" y="95" width="312" height="18"/>
+                                                    <rect key="frame" x="-2" y="127" width="312" height="18"/>
                                                     <buttonCell key="cell" type="check" title="@end前加换行" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="upr-hx-aX6">
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                         <font key="font" metaFont="system"/>
                                                     </buttonCell>
                                                 </button>
                                                 <button verticalHuggingPriority="750" tag="303" translatesAutoresizingMaskIntoConstraints="NO" id="Lx2-Rd-UoX">
-                                                    <rect key="frame" x="-2" y="63" width="312" height="18"/>
+                                                    <rect key="frame" x="-2" y="95" width="312" height="18"/>
                                                     <buttonCell key="cell" type="check" title="#pragma mark 改为 /// MARK:" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="xdw-XB-v4B">
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                         <font key="font" metaFont="system"/>
                                                     </buttonCell>
                                                 </button>
                                                 <button verticalHuggingPriority="750" tag="304" translatesAutoresizingMaskIntoConstraints="NO" id="ADA-ib-7kv">
-                                                    <rect key="frame" x="-2" y="31" width="312" height="18"/>
+                                                    <rect key="frame" x="-2" y="63" width="312" height="18"/>
                                                     <buttonCell key="cell" type="check" title="&quot;typedef NS_ENUM (&quot;转&quot;typedef NS_ENUM(&quot;" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="cc9-D8-CcB">
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                         <font key="font" metaFont="system"/>
                                                     </buttonCell>
                                                 </button>
                                                 <button verticalHuggingPriority="750" tag="305" translatesAutoresizingMaskIntoConstraints="NO" id="R2n-Ac-UKm">
-                                                    <rect key="frame" x="-2" y="-1" width="312" height="18"/>
+                                                    <rect key="frame" x="-2" y="31" width="312" height="18"/>
                                                     <buttonCell key="cell" type="check" title="property注释格式化" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="haG-mx-mjI">
+                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                        <font key="font" metaFont="system"/>
+                                                    </buttonCell>
+                                                </button>
+                                                <button verticalHuggingPriority="750" tag="306" translatesAutoresizingMaskIntoConstraints="NO" id="pq4-6G-4Ck">
+                                                    <rect key="frame" x="-2" y="-1" width="104" height="18"/>
+                                                    <buttonCell key="cell" type="check" title="if else格式化" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="ona-XU-LxH">
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                         <font key="font" metaFont="system"/>
                                                     </buttonCell>
@@ -145,8 +152,10 @@
                                                 <integer value="1000"/>
                                                 <integer value="1000"/>
                                                 <integer value="1000"/>
+                                                <integer value="1000"/>
                                             </visibilityPriorities>
                                             <customSpacing>
+                                                <real value="3.4028234663852886e+38"/>
                                                 <real value="3.4028234663852886e+38"/>
                                                 <real value="3.4028234663852886e+38"/>
                                                 <real value="3.4028234663852886e+38"/>

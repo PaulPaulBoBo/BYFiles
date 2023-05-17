@@ -8,8 +8,16 @@
 
 /* Begin PBXBuildFile section */
 		5A053A4C27450A0500EEFFB1 /* BYFileTreeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A053A4B27450A0500EEFFB1 /* BYFileTreeModel.m */; };
+		5A0904BF29C2C029000CF639 /* MainWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A0904BD29C2C029000CF639 /* MainWindowController.m */; };
+		5A0904C029C2C029000CF639 /* MainWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A0904BE29C2C029000CF639 /* MainWindowController.xib */; };
+		5A0904C329C2C0F8000CF639 /* ModuleSplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A0904C229C2C0F8000CF639 /* ModuleSplitViewController.m */; };
+		5A0904D629C2C621000CF639 /* SplitMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A0904D429C2C621000CF639 /* SplitMenuViewController.m */; };
+		5A0904D729C2C621000CF639 /* SplitMenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A0904D529C2C621000CF639 /* SplitMenuViewController.xib */; };
+		5A0904DB29C2C62D000CF639 /* SplitContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A0904D929C2C62D000CF639 /* SplitContentViewController.m */; };
+		5A0904DC29C2C62D000CF639 /* SplitContentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A0904DA29C2C62D000CF639 /* SplitContentViewController.xib */; };
 		5A09E9BD29C1B937000CF639 /* GBTask+Finder.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A09E9BC29C1B937000CF639 /* GBTask+Finder.m */; };
 		5A09E9C029C1B94E000CF639 /* GBTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A09E9BF29C1B94E000CF639 /* GBTask.m */; };
+		5A09FB3229C2AD27000CF639 /* ModulesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A09FB3029C2AD27000CF639 /* ModulesWindowController.m */; };
 		5A296330296D3C4C00D38932 /* BYFindUnusedImportWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A29632E296D3C4C00D38932 /* BYFindUnusedImportWindowController.m */; };
 		5A296331296D3C4C00D38932 /* BYFindUnusedImportWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A29632F296D3C4C00D38932 /* BYFindUnusedImportWindowController.xib */; };
 		5A296334296D3D6E00D38932 /* FindUnusedImport.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A296333296D3D6E00D38932 /* FindUnusedImport.m */; };
@@ -71,10 +79,23 @@
 		0B449C3DC0653E24F46D8EFF /* libPods-BYFiles.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BYFiles.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A053A4A27450A0500EEFFB1 /* BYFileTreeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYFileTreeModel.h; sourceTree = "<group>"; };
 		5A053A4B27450A0500EEFFB1 /* BYFileTreeModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYFileTreeModel.m; sourceTree = "<group>"; };
+		5A0904BC29C2C029000CF639 /* MainWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainWindowController.h; sourceTree = "<group>"; };
+		5A0904BD29C2C029000CF639 /* MainWindowController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainWindowController.m; sourceTree = "<group>"; };
+		5A0904BE29C2C029000CF639 /* MainWindowController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainWindowController.xib; sourceTree = "<group>"; };
+		5A0904C129C2C0F8000CF639 /* ModuleSplitViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ModuleSplitViewController.h; sourceTree = "<group>"; };
+		5A0904C229C2C0F8000CF639 /* ModuleSplitViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ModuleSplitViewController.m; sourceTree = "<group>"; };
+		5A0904D329C2C621000CF639 /* SplitMenuViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SplitMenuViewController.h; sourceTree = "<group>"; };
+		5A0904D429C2C621000CF639 /* SplitMenuViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SplitMenuViewController.m; sourceTree = "<group>"; };
+		5A0904D529C2C621000CF639 /* SplitMenuViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SplitMenuViewController.xib; sourceTree = "<group>"; };
+		5A0904D829C2C62D000CF639 /* SplitContentViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SplitContentViewController.h; sourceTree = "<group>"; };
+		5A0904D929C2C62D000CF639 /* SplitContentViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SplitContentViewController.m; sourceTree = "<group>"; };
+		5A0904DA29C2C62D000CF639 /* SplitContentViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SplitContentViewController.xib; sourceTree = "<group>"; };
 		5A09E9BB29C1B937000CF639 /* GBTask+Finder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GBTask+Finder.h"; sourceTree = "<group>"; };
 		5A09E9BC29C1B937000CF639 /* GBTask+Finder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GBTask+Finder.m"; sourceTree = "<group>"; };
 		5A09E9BE29C1B94E000CF639 /* GBTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GBTask.h; sourceTree = "<group>"; };
 		5A09E9BF29C1B94E000CF639 /* GBTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GBTask.m; sourceTree = "<group>"; };
+		5A09FB2F29C2AD27000CF639 /* ModulesWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ModulesWindowController.h; sourceTree = "<group>"; };
+		5A09FB3029C2AD27000CF639 /* ModulesWindowController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ModulesWindowController.m; sourceTree = "<group>"; };
 		5A29632D296D3C4C00D38932 /* BYFindUnusedImportWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BYFindUnusedImportWindowController.h; sourceTree = "<group>"; };
 		5A29632E296D3C4C00D38932 /* BYFindUnusedImportWindowController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BYFindUnusedImportWindowController.m; sourceTree = "<group>"; };
 		5A29632F296D3C4C00D38932 /* BYFindUnusedImportWindowController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BYFindUnusedImportWindowController.xib; sourceTree = "<group>"; };
@@ -241,6 +262,19 @@
 				5AE3FFF1291DE4B400178705 /* MainFilesWindowController.h */,
 				5AE3FFF2291DE4B400178705 /* MainFilesWindowController.m */,
 				5AE3FFF3291DE4B400178705 /* MainFilesWindowController.xib */,
+				5A0904BC29C2C029000CF639 /* MainWindowController.h */,
+				5A0904BD29C2C029000CF639 /* MainWindowController.m */,
+				5A0904BE29C2C029000CF639 /* MainWindowController.xib */,
+				5A09FB2F29C2AD27000CF639 /* ModulesWindowController.h */,
+				5A09FB3029C2AD27000CF639 /* ModulesWindowController.m */,
+				5A0904C129C2C0F8000CF639 /* ModuleSplitViewController.h */,
+				5A0904C229C2C0F8000CF639 /* ModuleSplitViewController.m */,
+				5A0904D329C2C621000CF639 /* SplitMenuViewController.h */,
+				5A0904D429C2C621000CF639 /* SplitMenuViewController.m */,
+				5A0904D529C2C621000CF639 /* SplitMenuViewController.xib */,
+				5A0904D829C2C62D000CF639 /* SplitContentViewController.h */,
+				5A0904D929C2C62D000CF639 /* SplitContentViewController.m */,
+				5A0904DA29C2C62D000CF639 /* SplitContentViewController.xib */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -436,6 +470,7 @@
 			files = (
 				5AE30980291DF4CC00178705 /* BYCodeFormatWindowController.xib in Resources */,
 				5AE3098F291DF52800178705 /* BYCodeClassImportWindowController.xib in Resources */,
+				5A0904DC29C2C62D000CF639 /* SplitContentViewController.xib in Resources */,
 				5AE30999291DF55900178705 /* BYCodeMarkAddWindowController.xib in Resources */,
 				5AE30985291DF4F000178705 /* BYCodeImportFormatWindowController.xib in Resources */,
 				5AB04FCD26DA59E900F7B167 /* Assets.xcassets in Resources */,
@@ -445,6 +480,8 @@
 				5AE3098A291DF50C00178705 /* BYCodeClassMapWindowController.xib in Resources */,
 				5AE3099E291DF57200178705 /* BYCodeMarkFixWindowController.xib in Resources */,
 				5ADE316729505B790015A034 /* BYSourceCheckWindowController.xib in Resources */,
+				5A0904C029C2C029000CF639 /* MainWindowController.xib in Resources */,
+				5A0904D729C2C621000CF639 /* SplitMenuViewController.xib in Resources */,
 				5AE30994291DF54000178705 /* BYCodeClassRelationWindowController.xib in Resources */,
 				5AE3FFF5291DE4B400178705 /* MainFilesWindowController.xib in Resources */,
 				5AB04FD026DA59E900F7B167 /* Main.storyboard in Resources */,
@@ -511,14 +548,17 @@
 				5AB04FD326DA59E900F7B167 /* main.m in Sources */,
 				5AD36ADB26E1AA440056E1E7 /* LogMsgTool.m in Sources */,
 				5AB04FC826DA59E900F7B167 /* AppDelegate.m in Sources */,
+				5A09FB3229C2AD27000CF639 /* ModulesWindowController.m in Sources */,
 				5A9B788A295148BE00477DAF /* BYFindConnectClassesWindowController.m in Sources */,
 				5AE30989291DF50C00178705 /* BYCodeClassMapWindowController.m in Sources */,
 				5AE3098E291DF52800178705 /* BYCodeClassImportWindowController.m in Sources */,
 				5AE30998291DF55900178705 /* BYCodeMarkAddWindowController.m in Sources */,
 				5A49842728FFC98C00679A3D /* AnalyzeCode.m in Sources */,
 				5ADE316A29505C150015A034 /* ImageCheck.m in Sources */,
+				5A0904BF29C2C029000CF639 /* MainWindowController.m in Sources */,
 				5A5FD82B296EA49A0038E87A /* AnalyzeCommonClassesUseState.m in Sources */,
 				5A8F84852966D41000732EA1 /* BYFindRouterWindowController.m in Sources */,
+				5A0904C329C2C0F8000CF639 /* ModuleSplitViewController.m in Sources */,
 				5A09E9BD29C1B937000CF639 /* GBTask+Finder.m in Sources */,
 				5AE30993291DF54000178705 /* BYCodeClassRelationWindowController.m in Sources */,
 				5AEA34A926E0FC1C00794261 /* ChoosePathTool.m in Sources */,
@@ -533,8 +573,10 @@
 				5AFC652A291542CB0033ACDE /* ImportCode.m in Sources */,
 				5A9B788E295149CA00477DAF /* FindConnectClasses.m in Sources */,
 				5A296330296D3C4C00D38932 /* BYFindUnusedImportWindowController.m in Sources */,
+				5A0904D629C2C621000CF639 /* SplitMenuViewController.m in Sources */,
 				5AE309A2291E133200178705 /* BYBaseWindowController.m in Sources */,
 				5AE3097F291DF4CC00178705 /* BYCodeFormatWindowController.m in Sources */,
+				5A0904DB29C2C62D000CF639 /* SplitContentViewController.m in Sources */,
 				5ADCFA4F27549DEC007162BF /* BaseComment.m in Sources */,
 				5ADCFA552754A31F007162BF /* FormatCode.m in Sources */,
 				5AC06E7E275872D2005911C6 /* GeneralConfig.m in Sources */,

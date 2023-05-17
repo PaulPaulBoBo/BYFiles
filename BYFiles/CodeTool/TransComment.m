@@ -216,7 +216,7 @@
         if([commentStr hasPrefix:SpecialCode_3_Star] || [commentStr hasPrefix:SpecialCode_4]) {
             continue;
         }
-        if(![commentStr hasPrefix:@"/**"] && [commentStr hasPrefix:@"/*"] && [commentNextStr hasPrefix:@"*"]) {
+        if(![commentStr isEqual:@"/**"] && ![commentStr isEqual:@"/*!"] && [commentStr isEqual:@"/*"]) {
             [arr replaceObjectAtIndex:i withObject:@"/**"];
         }
         
@@ -225,8 +225,16 @@
         commentStr = [self.loadFileTools removeWhiteSpacePreSufInString:commentStr];
         commentNextStr = [self.loadFileTools removeWhiteSpacePreSufInString:commentNextStr];
         
-        if([commentStr hasPrefix:@"/**"] && ![commentStr hasSuffix:@"*/"]) {
-            NSString *mainComment = [commentStr componentsSeparatedByString:@"/**"].lastObject;
+        if(([commentStr hasPrefix:@"/**"] || [commentStr hasPrefix:@"/*!"]) && ![commentStr hasSuffix:@"*/"]) {
+            
+            NSString *mainComment;
+            if([commentStr hasPrefix:@"/**"]) {
+                mainComment = [commentStr componentsSeparatedByString:@"/**"].lastObject;
+            } else if([commentStr hasPrefix:@"/*!"]) {
+                mainComment = [commentStr componentsSeparatedByString:@"/*!"].lastObject;
+            } else {
+                continue;
+            }
             mainComment = [self.loadFileTools removeWhiteSpacePreSufInString:mainComment];
             if(mainComment.length > 0) {
                 [arr replaceObjectAtIndex:i withObject:[NSString stringWithFormat:@"/// %@", mainComment]];
@@ -488,6 +496,9 @@
                 if([commentStr hasPrefix:@"/"]) {
                     commentStr = [commentStr stringByReplacingCharactersInRange:NSMakeRange(0, 1) withString:@""];
                 }
+                if([commentStr hasPrefix:@"   - "]) {
+                    continue;
+                }
                 commentStr = [self.loadFileTools removeWhiteSpacePreSufInString:commentStr];
                 if([commentStr hasPrefix:@"<"] && [commentStr rangeOfString:@"<#"].length == 0 && [commentStr rangeOfString:@">"].length == 0) {
                     commentStr = [commentStr stringByReplacingCharactersInRange:NSMakeRange(0, 1) withString:@""];
@@ -510,6 +521,9 @@
         }
         if([commentStr rangeOfString:@"@param"].length > 0 || [commentStr hasPrefix:SpecialCode_3]) {
             if([self.loadFileTools hasMuchWhiteSpace:commentStr]) {
+                if([commentStr hasPrefix:@"///   - "]) {
+                    continue;
+                }
                 NSRange range = [self.loadFileTools loadWhiteSpaceRangeInString:commentStr];
                 while(range.length >= 2 && range.length != NSNotFound) {
                     commentStr = [commentStr stringByReplacingOccurrencesOfString:[commentStr substringWithRange:range] withString:@" "];

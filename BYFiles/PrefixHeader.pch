@@ -16,4 +16,6 @@
 #import <Foundation/Foundation.h>
 #endif
 
+#import "Masonry.h"
+
 #endif /* PrefixHeader_pch */

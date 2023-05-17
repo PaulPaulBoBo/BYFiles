@@ -76,6 +76,10 @@
         if([[GeneralConfig shareInstance] readSettionWithKey:@"305"]) {
             [self formatPropertyComment:arr];
         }
+        // if else格式化
+        if([[GeneralConfig shareInstance] readSettionWithKey:@"306"]) {
+            [self formatElseCode:arr];
+        }
         
         NSMutableString *mStr = [NSMutableString new];
         for (int i= 0; i < arr.count; i++) {
@@ -252,13 +256,53 @@
 /// else 格式统一
 /// @param arr 代码行数组
 -(void)formatElseCode:(NSMutableArray *)arr {
-    for (int i = 0; i < arr.count-1; i++) {
+    for (int i = 0; i < arr.count-3; i++) {
         NSString *code = arr[i];
-        code = [self.loadFileTools removeWhiteSpacePreSufInString:code];
-        if([code hasPrefix:@"else"] && [code hasSuffix:@"{"]) {
-            NSString *preLineCode = arr[i-1];
-            preLineCode = [self.loadFileTools removeWhiteSpacePreSufInString:preLineCode];
-            [arr replaceObjectAtIndex:i withObject:code];
+        NSString *nextCode = arr[i+1];
+        NSString *thirdCode = arr[i+2];
+        NSString *noWhiteCode = [self.loadFileTools removeSpecStr:@" " inString:code];
+        NSString *noWhiteNextCode = [self.loadFileTools removeSpecStr:@" " inString:nextCode];
+        NSString *noWhiteThirdCode = [self.loadFileTools removeSpecStr:@" " inString:thirdCode];
+        if(([noWhiteCode hasPrefix:@"if ("] || [noWhiteCode hasPrefix:@"if("]) && [noWhiteCode rangeOfString:@"else"].length == 0) {
+            while ([code rangeOfString:@"if("].length > 0) {
+                code = [code stringByReplacingOccurrencesOfString:@"if(" withString:@"if ("];
+            }
+            if(![noWhiteCode hasSuffix:@"{"]  && [noWhiteNextCode isEqual:@"{"]) {
+                [arr replaceObjectAtIndex:i withObject:[NSString stringWithFormat:@"%@ {", code]];
+                [arr removeObjectAtIndex:i+1];
+            }
+        } else {
+            if([noWhiteCode isEqual:@"}"] && [noWhiteNextCode isEqual:@"else{"]) {
+                NSString *whiteSpace = [code componentsSeparatedByString:@"}"].firstObject;
+                [arr removeObjectAtIndex:i+1];
+                [arr replaceObjectAtIndex:i withObject:[NSString stringWithFormat:@"%@} else {", whiteSpace]];
+            } else if([noWhiteCode isEqual:@"}"] && [noWhiteNextCode hasPrefix:@"else{"]) {
+                NSString *formatNextCode = @"";
+                if([nextCode rangeOfString:@"else {"].length > 0) {
+                    formatNextCode = [nextCode stringByReplacingOccurrencesOfString:@"else {" withString:@"} else {"];
+                } else if([nextCode rangeOfString:@"else{"].length > 0) {
+                    formatNextCode = [nextCode stringByReplacingOccurrencesOfString:@"else{" withString:@"} else {"];
+                }
+                if(formatNextCode.length > 0) {
+                    [arr replaceObjectAtIndex:i+1 withObject:formatNextCode];
+                    [arr removeObjectAtIndex:i];
+                }
+            } else if([noWhiteCode isEqual:@"}"] && [noWhiteNextCode hasPrefix:@"else"] && [noWhiteThirdCode isEqual:@"{"]) {
+                NSString *whiteSpace = [code componentsSeparatedByString:@"}"].firstObject;
+                [arr replaceObjectAtIndex:i withObject:[NSString stringWithFormat:@"%@} else {", whiteSpace]];
+                [arr removeObjectAtIndex:i+2];
+                [arr removeObjectAtIndex:i+1];
+            } else if([code isEqual:@"} else{"]) {
+                [arr replaceObjectAtIndex:i withObject:@"} else {"];
+            } else if([code isEqual:@"}else {"]) {
+                [arr replaceObjectAtIndex:i withObject:@"} else {"];
+            } else if([code isEqual:@"}else if("]) {
+                code = [code stringByReplacingOccurrencesOfString:@"}else if(" withString:@"} else if ("];
+                [arr replaceObjectAtIndex:i withObject:code];
+            } else if([code isEqual:@"}else if ("]) {
+                code = [code stringByReplacingOccurrencesOfString:@"}else if (" withString:@"} else if ("];
+                [arr replaceObjectAtIndex:i withObject:code];
+            }
         }
     }
 }
